@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_port_type_cargaison,port.type.cargaison,model_port_type_cargaison,base.group_user,1,1,1,1
+access_port_type_marchandise,port.type.marchandise,model_port_type_marchandise,base.group_user,1,1,1,1
+access_port_mode_transport,port.mode.transport,model_port_mode_transport,base.group_user,1,1,1,1
+access_port_cargaison,port.cargaison,model_port_cargaison,base.group_user,1,1,1,1
+access_port_ordre_livraison,port.ordre.livraison,model_port_ordre_livraison,base.group_user,1,1,1,1
+access_port_gps,port.gps,model_port_gps,base.group_user,1,1,1,1
+access_port_type_cargaison_tarif,port.type.cargaison.tarif,model_port_type_cargaison_tarif,base.group_user,1,1,1,1

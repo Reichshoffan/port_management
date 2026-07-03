@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Vue Liste -->
+        <record id="view_port_depart_cargaison_list" model="ir.ui.view">
+            <field name="name">port.depart.cargaison.list</field>
+            <field name="model">port.cargaison</field>
+            <field name="arch" type="xml">
+                <list string="départ cargaison">
+                    <field name="num_voyage"/>
+                    <field name="date_depart"/>
+                    <field name="type_marchandise_id"/>
+                    <field name="client_id"/>
+                    <field name="mode_transport_id"/>
+                    <field name="immat_vehicule"/>
+                    <field name="bill_of_lading"/>
+                    <field name="statut" widget="badge"
+                             decoration-muted="statut=='brouillon'"
+                             decoration-info="statut=='depart'"
+                             />
+                </list>
+            </field>
+        </record>
+
+        <!-- Vue Formulaire -->
+        <record id="view_port_depart_cargaison_form" model="ir.ui.view">
+            <field name="name">port.depart.cargaison.form</field>
+            <field name="model">port.cargaison</field>
+            <field name="arch" type="xml">
+                <form string="Cargaison">
+                    <header>
+                        <button string="Confirmer" type="object" name="action_depart" class="btn-primary"
+                          invisible="statut in ['depart']"/>
+
+                        <field name="statut" widget="statusbar" statusbar_visible="brouillon,depart"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="num_voyage"/>
+                            <field name="date_depart"/>
+                            <field name="type_marchandise_id"/>
+                            <field name="client_id"/>
+                            <field name="mode_transport_id"/>
+                            <field name="immat_vehicule"/>
+                            <field name="bill_of_lading"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Action -->
+        <record id="action_port_depart_cargaison" model="ir.actions.act_window">
+            <field name="name">départ cargaison</field>
+            <field name="res_model">port.cargaison</field>
+            <field name="view_mode">list,form</field>
+            <field name="views" eval="[
+                (ref('view_port_depart_cargaison_list'), 'list'),
+                (ref('view_port_depart_cargaison_form'), 'form')
+            ]"/>
+            <field name="domain">[('statut', 'in', ('brouillon','depart'))]</field>
+        </record>
+
+    </data>
+</odoo>

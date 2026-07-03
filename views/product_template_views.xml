@@ -1,0 +1,20 @@
+<odoo>
+    <data>
+        <record id="view_product_template_form_inherit_labo" model="ir.ui.view">
+            <field name="name">product.template.form.labo</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+
+                <!-- Ajouter après sale_ok -->
+                <xpath expr="//field[@name='sale_ok']/.." position="inside">
+                    <div class="o_field_widget">
+                        <field name="is_port" nolabel="1"/>
+                        <label for="is_port" string="Port"/>
+                    </div>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

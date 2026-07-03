@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <record id="action_report_depart_cargaison" model="ir.actions.report">
+            <field name="name">Départ Cargaison</field>
+            <field name="model">port.cargaison</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">port_management.report_depart_cargaison_template</field>
+            <field name="report_file">port_management.report_depart_cargaison_template</field>
+        </record>
+
+    </data>
+</odoo>

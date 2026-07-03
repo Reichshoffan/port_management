@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- ══════════════════════════════════════════════
+             VUES ENTRÉE CARGAISON
+        ══════════════════════════════════════════════ -->
+
+        <!-- Vue Liste – Entrée -->
+        <record id="view_port_cargaison_entree_list" model="ir.ui.view">
+            <field name="name">port.cargaison.entree.list</field>
+            <field name="model">port.cargaison</field>
+            <field name="arch" type="xml">
+                <list string="Entrée Cargaison">
+                    <field name="name"/>
+                    <field name="date_entree"/>
+                    <field name="type_cargaison_id"/>
+                    <field name="type_marchandise_id"/>
+                    <field name="client_id"/>
+
+                    <field name="mode_transport_id"/>
+                    <field name="immat_vehicule"/>
+                    <field name="bill_of_lading"/>
+                    <field name="num_dic"/>
+                    <field name="statut" widget="badge"
+                           decoration-info="statut == 'entree'"
+                           decoration-warning="statut == 'traitement'"
+                           decoration-muted="statut == 'facturation'"
+                           decoration-success ="statut == 'paiement'"
+                           decoration-danger="statut == 'sortie'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Vue Formulaire – Entrée -->
+        <record id="view_port_cargaison_entree_form" model="ir.ui.view">
+            <field name="name">port.cargaison.entree.form</field>
+            <field name="model">port.cargaison</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <form string="Entrée Cargaison">
+                    <header>
+                        <button name="action_traitement"
+                                string="Mettre en traitement"
+                                type="object"
+                                class="btn-primary"
+                                invisible="statut != 'entree'"/>
+                        <field name="statut"
+                               widget="statusbar"
+                               statusbar_visible="entree,traitement,facturation,paiement,sortie"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"
+                                       placeholder="Référence cargaison..."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Identification marchandise">
+                                <field name="type_cargaison_id"/>
+                                <field name="type_marchandise_id"/>
+                                <field name="client_id"/>
+                            </group>
+                            <group string="Documents">
+                                <field name="bill_of_lading"/>
+                                <field name="num_dic"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Transport à l'entrée">
+                                <field name="mode_transport_id"/>
+                                <field name="immat_vehicule"/>
+                                <field name="date_entree"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action – Entrée Cargaison -->
+        <record id="action_port_cargaison_entree" model="ir.actions.act_window">
+            <field name="name">Entrée Cargaison</field>
+            <field name="res_model">port.cargaison</field>
+            <field name="view_mode">list,form</field>
+            <field name="views" eval="[
+                (ref('view_port_cargaison_entree_list'), 'list'),
+                (ref('view_port_cargaison_entree_form'), 'form')
+            ]"/>
+            <field name="domain">[('statut_depart', '=', 'valide')]</field>
+            <field name="context">{
+                'default_statut': 'brouillon',
+                'form_view_ref': 'port_cargaison.view_port_cargaison_entree_form',
+                'list_view_ref': 'port_cargaison.view_port_cargaison_entree_list'
+                }</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Aucune cargaison en entrée.
+                </p>
+                <p>Enregistrez une nouvelle cargaison à l'entrée du port.</p>
+            </field>
+        </record>
+
+
+        <!-- ══════════════════════════════════════════════
+             VUES DÉPART CARGAISON
+        ══════════════════════════════════════════════ -->
+
+        <!-- Vue Liste – Départ -->
+        <record id="view_port_cargaison_depart_list" model="ir.ui.view">
+            <field name="name">port.cargaison.depart.list</field>
+            <field name="model">port.cargaison</field>
+            <field name="arch" type="xml">
+                <list string="Cargaison"
+                      decoration-success="statut_depart == 'brouillon'"
+                      decoration-danger="statut_depart == 'depart'">
+                    <field name="name"/>
+                    <field name="immat_vehicule"/>
+                    <field name="num_voyage"/>
+                    <field name="date_depart"/>
+                    <field name="type_marchandise_id"/>
+                    <field name="type_cargaison_id"/>
+                    <field name="date_entree"/>
+                    <field name="date_sortie"/>
+                    <field name="sejour"/>
+                    <field name="client_id"/>
+                    <field name="mode_transport_id"/>
+                    <field name="gps_id" string="GPS"/>
+                    <field name="statut_depart" widget="badge"
+                           decoration-success="statut_depart == 'brouillon'"
+                           decoration-danger="statut_depart == 'valide'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Vue Formulaire – Départ -->
+        <record id="view_port_cargaison_depart_form" model="ir.ui.view">
+            <field name="name">port.cargaison.depart.form</field>
+            <field name="model">port.cargaison</field>
+            <field name="priority">20</field>
+            <field name="arch" type="xml">
+                <form string="Départ Cargaison">
+                    <header>
+                        <button name="%(port_management.action_report_depart_cargaison)d"
+                                string="Imprimer"
+                                type="action"
+                                class="btn-secondary"
+                                icon="fa-print"/>
+
+                        <button string="Valider"
+                                type="object"
+                                name="action_depart"
+                                class="btn-primary"
+                                invisible="statut_depart in ['valide']"/>
+
+                        <field name="statut_depart"
+                               widget="statusbar"
+                               statusbar_visible="brouillon,valide"/>
+
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <!-- Bloc r (lecture seule) -->
+                        <group string="Transaction">
+                            <field name="num_voyage"/>
+                            <field name="date_depart"/>
+                            <field name="t1"/>
+                        </group>
+                        <group string="Réference du Véhicule">
+                            <group>
+                                <field name="type_cargaison_id" />
+                                <field name="type_marchandise_id" />
+                                <field name="client_id" />
+                            </group>
+                            <group>
+                                <field name="bill_of_lading" />
+                                <field name="num_dic" />
+                                <field name="date_entree"/>
+                                <field name="gps_id"/>
+                            </group>
+                        </group>
+
+                        <!-- Bloc cargaison (éditable) -->
+                        <group string="Informations de la cargaison">
+                            <group>
+                                <field name="type_cargaison_id"/>
+                                <field name="num_conteneur"/>
+                                <field name="bill_of_lading"/>
+                            </group>
+                            <group>
+                                <field name="num_colis"/>
+                                <field name="poids"/>
+                                <field name="code_sh"/>
+                            </group>
+                            <group>
+                                <field name="type_marchandise_id"/>
+                            </group>
+                        </group>
+
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action – Départ Cargaison -->
+        <record id="action_port_cargaison_depart" model="ir.actions.act_window">
+            <field name="name">Départ Cargaison</field>
+            <field name="res_model">port.cargaison</field>
+            <field name="view_mode">list,form</field>
+            <field name="views" eval="[
+                (ref('view_port_cargaison_depart_list'), 'list'),
+                (ref('view_port_cargaison_depart_form'), 'form')
+            ]"/>
+            <field name="domain">[('statut_depart', 'in', ['brouillon', 'valide'])]</field>
+            <field name="context">{'default_statut': 'brouillon'}</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Aucune cargaison en cours de départ.
+                </p>
+                <p>Les cargaisons en facturation, paiement ou sortie apparaissent ici.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

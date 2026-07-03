@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+        <!-- Vue Liste -->
+        <record id="view_port_mode_transport_list" model="ir.ui.view">
+            <field name="name">port.mode.transport.list</field>
+            <field name="model">port.mode.transport</field>
+            <field name="arch" type="xml">
+                <list string="Mode de transport" editable="bottom" create="true" edit="true">
+                    <field name="name"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Vue Formulaire -->
+        <record id="view_port_mode_transport_form" model="ir.ui.view">
+            <field name="name">port.mode.transport.form</field>
+            <field name="model">port.mode.transport</field>
+            <field name="arch" type="xml">
+                <form string="Mode de transport">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Action -->
+        <record id="action_port_mode_transport" model="ir.actions.act_window">
+            <field name="name">mode de transport</field>
+            <field name="res_model">port.mode.transport</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>

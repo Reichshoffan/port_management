@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <!-- Vue Liste – cargaison -->
+        <record id="view_port_cargaison_list" model="ir.ui.view">
+            <field name="name">port.cargaison.list</field>
+            <field name="model">port.cargaison</field>
+            <field name="arch" type="xml">
+                <list string="Cargaison">
+                    <field name="name"/>
+                    <field name="immat_vehicule"/>
+                    <field name="num_voyage"/>
+                    <field name="date_depart"/>
+                    <field name="type_marchandise_id"/>
+                    <field name="type_cargaison_id"/>
+                    <field name="date_entree"/>
+                    <field name="date_sortie"/>
+                    <field name="sejour"/>
+                    <field name="client_id"/>
+                    <field name="mode_transport_id"/>
+                    <field name="gps_id" string="GPS"/>
+                    <field name="statut" widget="badge"
+                           decoration-bf="statut == 'brouillon'"
+                           decoration-muted="statut == 'depart'"
+                           decoration-info="statut == 'entree'"
+                           decoration-primary="statut == 'traitement'"
+                           decoration-warning="statut == 'facture'"
+                           decoration-success ="statut == 'paye'"
+                           decoration-danger="statut == 'sortie'"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Panel latéral de filtre -->
+        <record id="view_cargaison_search" model="ir.ui.view">
+            <field name="name">port.cargaison.search</field>
+            <field name="model">port.cargaison</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+
+                    <searchpanel>
+                        <field name="statut" string="Statut" select="multi" icon="fa-hourglass-half" color="#6f42c1"/>
+                        <field name="type_cargaison_id" string="Type cargaison" select="multi" icon="fa-hospital-o" color="#6f42c1"/>
+                        <field name="type_marchandise_id" string="Type marchandise" select="multi" icon="fa-hospital-o" color="#6f42c1"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <!-- Vue Formulaire -->
+        <record id="view_port_cargaison_form" model="ir.ui.view">
+            <field name="name">port.cargaison.form</field>
+            <field name="model">port.cargaison</field>
+            <field name="priority">16</field>
+            <field name="arch" type="xml">
+                <form string="Cargaison">
+
+                    <header>
+                        <!-- SMART BUTTON -->
+                         <div class="oe_button_box" name="button_box">
+                             <button name="action_open_facture"
+                                    type="object"
+                                    class="oe_stat_button"
+                                    icon="fa-list">
+
+                                <div class="o_stat_info">
+                                    <span class="o_stat_value">
+                                        <field name="facture_total"/>
+                                    </span>
+                                    <span class="o_stat_text">Facture</span>
+                                </div>
+                            </button>
+                        </div>
+                        <button name="%(port_management.action_report_depart_cargaison)d"
+                                string="Imprimer la fiche départ"
+                                type="action"
+                                class="btn-secondary"
+                                icon="fa-print"/>
+
+                        <button name="action_depart"
+                                string="Départ"
+                                type="object"
+                                class="btn-primary"
+                                invisible="statut != 'brouillon'"/>
+                                />
+                        <button name="action_entrer"
+                                string="Entrer au port"
+                                type="object"
+                                class="btn-primary"
+                                invisible="statut != 'depart'"/>
+                                />
+                        <button name="action_traiter"
+                                string="Traiter"
+                                type="object"
+                                class="btn-primary"
+                                invisible="statut != 'entree'"/>
+                                />
+                        <button name="action_facturer"
+                                string="Facturer"
+                                type="object"
+                                class="btn-primary"
+                                invisible="statut != 'traitement'"/>
+                                />
+                        <button name="action_sortir"
+                                string="Sortir du port"
+                                type="object"
+                                class="btn-primary"
+                                invisible="statut != 'paye'"/>
+                                />
+                        <field name="statut"
+                               widget="statusbar"
+                               statusbar_visible="brouillon,depart,entree,traitement,facture,paye,sortie"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name"
+                                       readonly="1"
+                                       placeholder="Numéro du dossier..."/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Identification marchandise">
+                                <field name="type_cargaison_id" string="Type de cargaison"/>
+                                <field name="type_marchandise_id"/>
+                                <field name="poids"/>
+                                <field name="volume"/>
+                                <field name="nb_colis"/>
+                                <field name="num_colis"/>
+                                <field name="num_conteneur"/>
+                                <field name="code_sh"/>
+                                <field name="client_id"/>
+                                <field name="mode_transport_id"/>
+                                <field name="immat_vehicule"/>
+                            </group>
+                            <group string="Documents annexes">
+                                <field name="num_titre_transit"/>
+                                <field name="bill_of_lading"/>
+                                <field name="num_dic"/>
+                                <field name="t1"/>
+                                <field name="num_d15"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group string="Transport au départ">
+                                <field name="date_depart" readonly="1"/>
+                                <field name="gps_id"/>
+                            </group>
+                            <group string="Transport à l'entrée et sortie">
+                                <field name="date_entree" readonly="1"/>
+                                <field name="date_sortie" />
+                                <field name="sejour" readonly="1"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <chatter/>
+                </form>
+            </field>
+        </record>
+
+        <!-- Action – Cargaison -->
+        <record id="action_port_cargaison" model="ir.actions.act_window">
+            <field name="name">Cargaison</field>
+            <field name="res_model">port.cargaison</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Aucune cargaison trouvée.
+                </p>
+                <p>Enregistrez une nouvelle cargaison au départ à la frontière.</p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

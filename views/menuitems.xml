@@ -1,0 +1,92 @@
+<odoo>
+    <data>
+
+        <!-- Menu principal -->
+        <menuitem
+            id="port_management_root"
+            name="Port logistic"
+            web_icon="port_management,static/description/icon.png"
+            sequence="0"
+        />
+
+        <!-- Opération -->
+        <menuitem
+            id="menu_operation"
+            name="Opérations"
+            parent="port_management_root"
+            sequence="1"
+        />
+        <menuitem
+            id="menu_cargaison"
+            name="Cargaison"
+            parent="menu_operation"
+            action="action_port_cargaison"
+            sequence="11"
+        />
+
+
+        <!-- Location -->
+        <menuitem
+            id="menu_location"
+            name="Location"
+            parent="port_management_root"
+            sequence="2"
+        />
+
+        <!-- Planning -->
+        <menuitem
+            id="menu_planning"
+            name="Planning"
+            parent="port_management_root"
+            sequence="3"
+        />
+
+        <!-- Report -->
+        <menuitem
+            id="menu_rapportt"
+            name="Rapport"
+            parent="port_management_root"
+            sequence="4"
+        />
+
+        <!-- Configuration -->
+        <menuitem
+            id="menu_configuration"
+            name="Configuration"
+            parent="port_management_root"
+            sequence="5"
+        />
+
+        <menuitem
+            id="menu_type_marchandise"
+            name="Type de marchandise"
+            parent="menu_configuration"
+            action="action_port_type_marchandise"
+            sequence="51"
+        />
+
+        <menuitem
+            id="menu_type_cargaison"
+            name="Type de cargaison"
+            parent="menu_configuration"
+            action="action_port_type_cargaison"
+            sequence="52"
+        />
+
+        <menuitem
+            id="menu_mode_transport"
+            name="Mode transport"
+            parent="menu_configuration"
+            action="action_port_mode_transport"
+            sequence="53"
+        />
+        <menuitem
+            id="menu_stock_gps"
+            name="Stock GPS"
+            parent="menu_configuration"
+            action="action_port_gps"
+            sequence="54"
+        />
+
+    </data>
+</odoo>

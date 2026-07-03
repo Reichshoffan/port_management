@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+        <template id="report_entree_cargaison_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+
+                        <div class="page">
+
+                            <!-- ── EN-TÊTE ── -->
+                            <div class="row mb-4">
+                                <div class="col-6">
+                                    <h2 class="text-primary">
+                                        FICHE D'ENTREE CARGAISON
+                                    </h2>
+                                    <h3>
+                                        <span t-field="doc.name"/>
+                                    </h3>
+                                </div>
+                                <div class="col-6 text-end">
+                                    <span class="badge bg-primary fs-6">
+                                        <t t-esc="dict(doc.fields_get(['statut'])['statut']['selection'])[doc.statut]"/>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <hr/>
+
+                            <!-- ── INFORMATIONS GÉNÉRALES ── -->
+                            <h5 class="mt-3 mb-2 text-muted">
+                                Informations générales
+                            </h5>
+                            <table class="table table-bordered table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold bg-light" style="width:30%">N° Dossier</td>
+                                        <td><span t-field="doc.name"/></td>
+                                        <td class="fw-bold bg-light" style="width:30%">N° Voyage</td>
+                                        <td><span t-field="doc.num_voyage"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">Client</td>
+                                        <td><span t-field="doc.client_id"/></td>
+                                        <td class="fw-bold bg-light">Type de cargaison</td>
+                                        <td><span t-field="doc.type_cargaison_id"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">Type de marchandise</td>
+                                        <td><span t-field="doc.type_marchandise_id"/></td>
+                                        <td class="fw-bold bg-light">Code SH</td>
+                                        <td><span t-field="doc.code_sh"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">Provenance</td>
+                                        <td><span t-field="doc.provenance"/></td>
+                                        <td class="fw-bold bg-light">Destination</td>
+                                        <td><span t-field="doc.destination"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- ── TRANSPORT ── -->
+                            <h5 class="mt-4 mb-2 text-muted">Transport</h5>
+                            <table class="table table-bordered table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold bg-light" style="width:30%">Mode de transport</td>
+                                        <td><span t-field="doc.mode_transport_id"/></td>
+                                        <td class="fw-bold bg-light" style="width:30%">Immatriculation</td>
+                                        <td><span t-field="doc.immat_vehicule"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">Conducteur</td>
+                                        <td><span t-field="doc.conducteur"/></td>
+                                        <td class="fw-bold bg-light">Permis de conduire</td>
+                                        <td><span t-field="doc.permis_conduire"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">N° GPS</td>
+                                        <td><span t-field="doc.gps_id"/></td>
+                                        <td class="fw-bold bg-light">Séjour (jours)</td>
+                                        <td><span t-field="doc.sejour"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- ── DATES ── -->
+                            <h5 class="mt-4 mb-2 text-muted">Dates</h5>
+                            <table class="table table-bordered table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold bg-light" style="width:30%">Date de départ</td>
+                                        <td>
+                                            <span t-field="doc.date_depart"
+                                                  t-options='{"format": "dd/MM/yyyy HH:mm"}'/>
+                                        </td>
+                                        <td class="fw-bold bg-light" style="width:30%">Date d'entrée</td>
+                                        <td>
+                                            <span t-field="doc.date_entree"
+                                                  t-options='{"format": "dd/MM/yyyy HH:mm"}'/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">Date de sortie</td>
+                                        <td>
+                                            <span t-field="doc.date_sortie"
+                                                  t-options='{"format": "dd/MM/yyyy HH:mm"}'/>
+                                        </td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- ── MARCHANDISE ── -->
+                            <h5 class="mt-4 mb-2 text-muted">Marchandise</h5>
+                            <table class="table table-bordered table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold bg-light" style="width:30%">Poids (Kg)</td>
+                                        <td><span t-field="doc.poids"/></td>
+                                        <td class="fw-bold bg-light" style="width:30%">Volume (m³)</td>
+                                        <td><span t-field="doc.volume"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">Nombre de colis</td>
+                                        <td><span t-field="doc.nb_colis"/></td>
+                                        <td class="fw-bold bg-light">N° de colis</td>
+                                        <td><span t-field="doc.num_colis"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">Nombre de conteneurs</td>
+                                        <td><span t-field="doc.nb_conteneur"/></td>
+                                        <td class="fw-bold bg-light">N° Conteneur</td>
+                                        <td><span t-field="doc.num_conteneur"/></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- ── DOCUMENTS ── -->
+                            <h5 class="mt-4 mb-2 text-muted">Documents douaniers</h5>
+                            <table class="table table-bordered table-sm">
+                                <tbody>
+                                    <tr>
+                                        <td class="fw-bold bg-light" style="width:30%">Bill of Lading</td>
+                                        <td><span t-field="doc.bill_of_lading"/></td>
+                                        <td class="fw-bold bg-light" style="width:30%">N° DIC</td>
+                                        <td><span t-field="doc.num_dic"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">N° D15</td>
+                                        <td><span t-field="doc.num_d15"/></td>
+                                        <td class="fw-bold bg-light">N° et date T1</td>
+                                        <td><span t-field="doc.t1"/></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="fw-bold bg-light">N° Titre transit</td>
+                                        <td><span t-field="doc.num_titre_transit"/></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <!-- ── PIED DE PAGE INTERNE ── -->
+                            <div class="row mt-5">
+                                <div class="col-6 text-center">
+                                    <p>Signature responsable port</p>
+                                    <br/><br/>
+                                    <div style="border-top: 1px solid #000; width: 80%; margin: auto;"/>
+                                </div>
+                                <div class="col-6 text-center">
+                                    <p>Signature client</p>
+                                    <br/><br/>
+                                    <div style="border-top: 1px solid #000; width: 80%; margin: auto;"/>
+                                </div>
+                            </div>
+
+                        </div><!-- /.page -->
+                    </t>
+                </t>
+            </t>
+        </template>
+
+    </data>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+
+
+        <!-- Vue Liste -->
+        <record id="view_port_type_marchandise_list" model="ir.ui.view">
+            <field name="name">port.type.marchandise.list</field>
+            <field name="model">port.type.marchandise</field>
+            <field name="arch" type="xml">
+                <list string="Types de marchandise" editable="bottom" create="true" edit="true">
+                    <field name="name"/>
+                    <field name="majoration"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- Vue Formulaire -->
+        <record id="view_port_type_marchandise_form" model="ir.ui.view">
+            <field name="name">port.type.marchandise.form</field>
+            <field name="model">port.type.marchandise</field>
+            <field name="arch" type="xml">
+                <form string="Type de marchandise">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="majoration"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <!-- Action -->
+        <record id="action_port_type_marchandise" model="ir.actions.act_window">
+            <field name="name">Types de marchandise</field>
+            <field name="res_model">port.type.marchandise</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>
